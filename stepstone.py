@@ -26,7 +26,9 @@ class Result(object):
 
     def fetch_offer_content(self):
         req = BeautifulSoup(get(self.listing_url).content, parser="lxml", features="lxml")
-        ret = req.find_all("main", attrs={"class": "offer__content"})[1].text
+        ret = req.find_all("main", attrs={"class": "offer__content"})
+        if len(ret) < 1:
+            ret = req.find_all("js-app-ld-ContentBlock")
         return ret
 
 
@@ -54,6 +56,15 @@ class Results(object):
             if text.lower() in res.offer_content.lower():
                 ret.append(res)
         return ret
+
+    def print(self, keys=None):
+        if keys is None:
+            keys = ["title", "requirements", "posted", "city", "listing_url"]
+        for r in self.results:
+            d = r.__dict__
+            for k in keys:
+                print("{0}:\t{1}".format(k, d[k]))
+            print()
 
 
 class StepStone(object):
@@ -150,3 +161,6 @@ if __name__ == '__main__':
                 print(results)
             else:
                 print("no matches for '{0}' found.".format(f))
+
+    if a.filter is None and a.output is None:
+        s.results.print()
