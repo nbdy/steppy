@@ -25,7 +25,7 @@ ex: ./stepstone.py -s android -p 45127 -r 50 -o out.json -f "home office"
 ```
 #### code
 ```python
-from stepstone import StepStone
+from steppy.stepstone import StepStone
 ss = StepStone()
 results = ss.fetch("android", "45127", 50)
 results.save("output.json")
