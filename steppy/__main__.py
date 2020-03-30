@@ -12,7 +12,7 @@ def generate_valid_outfile(path):
     return path
 
 
-if __name__ == '__main__':
+def main():
     ap = ArgumentParser()
     ap.add_argument("-s", "--search", help="job title or skill", type=str)
     ap.add_argument("-p", "--postal", help="your postal code", type=str)
@@ -49,3 +49,7 @@ if __name__ == '__main__':
 
     if a.filter is None and a.output is None:
         s.results.print()
+
+
+if __name__ == '__main__':
+    main()

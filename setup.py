@@ -17,5 +17,7 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     keywords="stepstone python api job crawler",
-    packages=find_packages()
+    packages=find_packages(),
+    entry_points={'console_scripts': ['steppy = steppy.__main__:main']},
+    install_requires=open("requirements.txt").readlines()
 )
