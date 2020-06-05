@@ -1,4 +1,5 @@
 ## steppy
+[![Build Status](https://build.eberlein.io/buildStatus/icon?job=python_steppy)](https://build.eberlein.io/job/python_steppy/)
 ### why?
 i can not be bothered to read through all the job offers.
 ### how to use it?
