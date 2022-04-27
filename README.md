@@ -1,9 +1,15 @@
 ## steppy
+
 [![Build Status](https://build.eberlein.io/buildStatus/icon?job=python_steppy)](https://build.eberlein.io/job/python_steppy/)
+
 ### why?
+
 i can not be bothered to read through all the job offers.
+
 ### how to use it?
+
 #### cli
+
 ```
 └──╼ $./stepstone.py -h
 usage: stepstone.py [-h] [-s SEARCH] [-p POSTAL] [-r RANGE]
@@ -24,9 +30,12 @@ optional arguments:
 
 ex: ./stepstone.py -s android -p 45127 -r 50 -o out.json -f "home office"
 ```
+
 #### code
+
 ```python
-from steppy.stepstone import StepStone
+from steppy.Stepstone import StepStone
+
 ss = StepStone()
 results = ss.fetch("android", "45127", 50)
 results.save("output.json")
