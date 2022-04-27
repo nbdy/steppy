@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 from os.path import isfile
-from .stepstone import StepStone
+from steppy.Stepstone import StepStone
+from loguru import logger as log
 
 
 def generate_valid_outfile(path):
@@ -21,7 +22,7 @@ def main():
     ap.add_argument("-o", "--output", help="save results to json file", type=str)
     a = ap.parse_args()
     if a.search is None:
-        print("no search query specified. exiting")
+        log.error("No search query specified!")
         exit()
     if a.range is None:
         a.range = ""
@@ -32,20 +33,21 @@ def main():
     try:
         s.fetch(a.search, a.postal, a.range)
     except KeyboardInterrupt:
-        print("\ncaught ctrl+c")
+        log.info("\nCaught CTRL+C")
 
     if a.output is not None:
-        print("saving results to file")
-        s.results.save(generate_valid_outfile(a.output))
+        fn = generate_valid_outfile(a.output)
+        log.info("Saving results to file '{}'.", fn)
+        s.results.save(fn)
 
     if a.filter is not None:
-        print("filtering results")
+        log.info("Filtering results...")
         for f in a.filter:
             results = s.results.filter(a.filter)
             if len(results) > 0:
                 print(results)
             else:
-                print("no matches for '{0}' found.".format(f))
+                log.info("No matches found for '{}'.", f)
 
     if a.filter is None and a.output is None:
         s.results.print()

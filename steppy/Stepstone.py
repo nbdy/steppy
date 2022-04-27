@@ -1,8 +1,8 @@
-#!/usr/bin/python3
 from requests import get
 from bs4 import BeautifulSoup
 from progressbar import ProgressBar
 from json import dump
+from loguru import logger as log
 
 
 class Result(object):
@@ -46,7 +46,6 @@ class Results(object):
         data = self._prepare_data()
         with open(path, "w") as fp:
             dump(data, fp)
-        print("saved results to '{0}'.".format(path))
 
     def filter(self, text):
         ret = []
@@ -100,9 +99,9 @@ class StepStone(object):
         url = self.format_base_url(keyword, plz, km)
         if self.debug:
             print(url)
-        print("fetching results for '{0}' {1} km around {2}.".format(keyword, km, plz))
-        r = get(url)
-        soup = BeautifulSoup(r.content, parser="lxml", features="lxml")   # fetches first page
+
+        log.debug("Fetching results for '{}' {} km around {}.", keyword, km, plz)
+        soup = BeautifulSoup(get(url).content, parser="lxml", features="lxml")   # fetches first page
         self.get_result_count(soup)
         i = 0
         with ProgressBar(0, self.result_count) as pb:
@@ -112,5 +111,5 @@ class StepStone(object):
                 i += 1
                 soup = BeautifulSoup(get(self.format_base_url(keyword, plz, km, i + 1)).content, parser="lxml",
                                      features="lxml")
-        print("found %i/%i job offers" % (len(self.results.results), self.result_count))
+        log.debug("Found {}/{} offers.", len(self.results.results), self.result_count)
         return self.results
