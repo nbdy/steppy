@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    long_description=open("README.rst", "r").read(),
+    long_description=open("README.md", "r").read(),
     name="shoppy",
     version="0.1",
     description="modular shop crawler",
@@ -18,5 +18,6 @@ setup(
     keywords="modular shop product crawler",
     packages=find_packages(),
     entry_points={'console_scripts': ['shoppy = shoppy.__main__:main']},
-    install_requires=open("requirements.txt").readlines()
+    install_requires=open("requirements.txt").readlines(),
+    long_description_content_type="text/markdown"
 )
